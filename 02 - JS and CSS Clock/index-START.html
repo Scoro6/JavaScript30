@@ -1,74 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
-</head>
-<body>
-
-
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS + CSS Clock</title>
+  </head>
+  <body>
+    <button class="button">Click me!</button>
     <div class="clock">
       <div class="clock-face">
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
+        <div class="numbers">
+          <div class="twelve">12</div>
+          <div class="eleven">11</div>
+          <div class="ten">10</div>
+          <div class="nine">9</div>
+          <div class="eight">8</div>
+          <div class="seven">7</div>
+          <div class="six">6</div>
+          <div class="five">5</div>
+          <div class="four">4</div>
+          <div class="three">3</div>
+          <div class="two">2</div>
+          <div class="one">1</div>
+        </div>
       </div>
     </div>
+    <div class="time">
+      <div class="hours"></div>
+      <div>:</div>
+      <div class="minutes"></div>
+      <div>:</div>
+      <div class="seconds"></div>
+    </div>
 
+    <style>
+      html {
+        background: #018ded url(https://unsplash.it/1500/1000?image=881&blur=5);
+        background-size: cover;
+        font-family: "helvetica neue";
+        text-align: center;
+        font-size: 10px;
+      }
+      body {
+        margin: 0;
+        font-size: 2rem;
+        display: flex;
+        flex: 1;
+        min-height: 100vh;
+        align-items: center;
+      }
+      button {
+        background-color: aqua;
+        border: 2px solid white;
+        outline: none;
+        font-size: 1em;
+        padding: 0.7rem;
+        cursor: pointer;
+        margin: 10%;
+      }
+      .clock {
+        display: block;
+        width: 30rem;
+        height: 30rem;
+        border: 20px solid white;
+        border-radius: 50%;
+        margin: 50px auto;
+        position: relative;
+        padding: 2rem;
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 3px #efefef,
+          inset 0 0 10px black, 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      .time {
+        font-size: 48px;
+        color: white;
+        width: 30%;
+        height: 10vh;
+        background-color: transparent;
+        display: none;
+        border: 2px solid white;
+      }
+      .hours {
+        width: 30%;
+        height: 100%;
+        padding: 10px;
+      }
+      .minutes {
+        width: 30%;
+        height: 100%;
+        padding: 10px;
+      }
+      .seconds {
+        width: 30%;
+        height: 100%;
+        padding: 10px;
+      }
+      .clock-face {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform: translateY(
+          -3px
+        ); /* account for the height of the clock hands */
+      }
 
-  <style>
-    html {
-      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
-      background-size: cover;
-      font-family: 'helvetica neue';
-      text-align: center;
-      font-size: 10px;
-    }
+      .hand {
+        width: 50%;
+        height: 6px;
+        background: black;
+        position: absolute;
+        top: 50%;
+        transition: all 0.05s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+        transform: rotate(90deg);
+        transform-origin: 100%;
+        z-index: 4;
+      }
+      .min-hand {
+        height: 5px;
+      }
+      .second-hand {
+        height: 3px;
+      }
+      .twelve,
+      .eleven,
+      .ten,
+      .nine,
+      .eight,
+      .seven,
+      .six,
+      .five,
+      .four,
+      .three,
+      .two,
+      .one {
+        font-family: sans-serif;
+        color: white;
+        font-size: 20px;
+        position: absolute;
+        top: 0%;
+        left: 46%;
+        height: 100%;
+        text-align: center;
+      }
+      .one {
+        transform: translate(800%, 6%);
+      }
+      .two {
+        transform: translate(1200%, 26%);
+      }
+      .three {
+        transform: translate(1400%, 49%);
+      }
+      .four {
+        transform: translate(1200%, 72%);
+      }
+      .five {
+        transform: translate(800%, 90%);
+      }
+      .six {
+        transform: translate(20%, 95%);
+      }
+      .seven {
+        transform: translate(-700%, 88%);
+      }
+      .eight {
+        transform: translate(-1150%, 70%);
+      }
+      .nine {
+        transform: translate(-1300%, 48%);
+      }
+      .ten {
+        transform: translate(-600%, 25%);
+      }
+      .eleven {
+        transform: translate(-400%, 6%);
+      }
+      .twelve {
+        transform: rotate(360deg);
+        transform-origin: 50%;
+      }
+    </style>
 
-    body {
-      margin: 0;
-      font-size: 2rem;
-      display: flex;
-      flex: 1;
-      min-height: 100vh;
-      align-items: center;
-    }
+    <script>
+      const secondHand = document.querySelector(".second-hand");
+      const minHand = document.querySelector(".min-hand");
+      const hourHand = document.querySelector(".hour-hand");
+      const button = document.querySelector(".button");
+      const clock = document.querySelector(".clock");
+      const time = document.querySelector(".time");
+      const secondsDisplay = document.querySelector(".seconds");
+      const minutesDisplay = document.querySelector(".minutes");
+      const hoursDisplay = document.querySelector(".hours");
 
-    .clock {
-      width: 30rem;
-      height: 30rem;
-      border: 20px solid white;
-      border-radius: 50%;
-      margin: 50px auto;
-      position: relative;
-      padding: 2rem;
-      box-shadow:
-        0 0 0 4px rgba(0,0,0,0.1),
-        inset 0 0 0 3px #EFEFEF,
-        inset 0 0 10px black,
-        0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .clock-face {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
-    }
-
-    .hand {
-      width: 50%;
-      height: 6px;
-      background: black;
-      position: absolute;
-      top: 50%;
-    }
-
-  </style>
-
-  <script>
-
-
-  </script>
-</body>
+      function toggleClock() {
+        button.addEventListener("click", () => {
+          if (clock.style.display != "none") {
+            clock.style.display = "none";
+            time.style.display = "flex";
+          } else {
+            clock.style.display = "block";
+            time.style.display = "none";
+          }
+        });
+      }
+      function setDate() {
+        const todayDate = new Date();
+        const seconds = todayDate.getSeconds();
+        if (seconds == 0) {
+          secondHand.style.transition = "none";
+        }
+        const degreeSeconds = seconds * 6 + 90;
+        secondsDisplay.textContent = seconds;
+        secondHand.style.transform = `rotate(${degreeSeconds}deg)`;
+        const minutes = todayDate.getMinutes();
+        const degreeMinutes = minutes * 6 + 90;
+        minutesDisplay.textContent = minutes;
+        minHand.style.transform = `rotate(${degreeMinutes}deg)`;
+        const hours = todayDate.getHours();
+        const degreeHours = hours * 30 + 90;
+        hoursDisplay.textContent = hours;
+        hourHand.style.transform = `rotate(${degreeHours}deg)`;
+      }
+      setInterval(setDate, 1000);
+      toggleClock();
+    </script>
+  </body>
 </html>
